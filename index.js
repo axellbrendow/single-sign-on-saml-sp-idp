@@ -31,3 +31,19 @@ app.get(
 const server = app.listen(4300, () => {
   console.log("Listening on port %d", server.address().port);
 });
+
+passport.serializeUser((user, done) => {
+  console.log("-----------------------------");
+  console.log("serialize user");
+  console.log(user);
+  console.log("-----------------------------");
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  console.log("-----------------------------");
+  console.log("deserialize user");
+  console.log(user);
+  console.log("-----------------------------");
+  done(null, user);
+});
