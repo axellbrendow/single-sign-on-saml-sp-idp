@@ -47,3 +47,24 @@ passport.deserializeUser((user, done) => {
   console.log("-----------------------------");
   done(null, user);
 });
+
+const samlStrategy = new saml.Strategy(
+  {
+    callbackUrl: "http://localhost/login/callback",
+    entryPoint: "http://localhost:8080/simplesaml/saml2/idp/SSOService.php",
+    // The issuer is a globally unique identifier for our application
+    issuer: "saml-poc",
+    // "identifierFormat" -> IdP administrators will provide a value that you must enter.
+    identifierFormat: null,
+    decryptionPvk: fs.readFileSync(__dirname + "/certs/key.pem", "utf8"),
+    privateCert: fs.readFileSync(__dirname + "/certs/key.pem", "utf8"),
+    // Determine if the incoming SAML responses need to be validated or not. I set
+    // it to false for simplicity in our sample.
+    validateInResponseTo: false,
+    // Helpful when authenticating against an Active Directory Server
+    disableRequestedAuthnContext: true,
+  },
+  (profile, done) => {
+    return done(null, profile);
+  }
+);
