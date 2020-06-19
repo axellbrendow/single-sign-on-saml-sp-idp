@@ -73,3 +73,20 @@ passport.use("samlStrategy", samlStrategy);
 
 app.use(passport.initialize({}));
 app.use(passport.session({}));
+
+app.post(
+  "/login/callback",
+  (req, res, next) => {
+    console.log("-----------------------------");
+    console.log("/Start login callback ");
+    next();
+  },
+  passport.authenticate("samlStrategy"),
+  (req, res) => {
+    console.log("-----------------------------");
+    console.log("login call back dumps");
+    console.log(req.user);
+    console.log("-----------------------------");
+    res.send("Log in Callback Success");
+  }
+);
