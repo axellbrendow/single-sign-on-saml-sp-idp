@@ -90,3 +90,15 @@ app.post(
     res.send("Log in Callback Success");
   }
 );
+
+app.get("/metadata", (req, res) => {
+  res.type("application/xml");
+  res
+    .status(200)
+    .send(
+      samlStrategy.generateServiceProviderMetadata(
+        fs.readFileSync(__dirname + "/certs/cert.pem", "utf8"),
+        fs.readFileSync(__dirname + "/certs/cert.pem", "utf8")
+      )
+    );
+});
