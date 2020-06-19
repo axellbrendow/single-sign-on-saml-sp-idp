@@ -68,3 +68,8 @@ const samlStrategy = new saml.Strategy(
     return done(null, profile);
   }
 );
+
+passport.use("samlStrategy", samlStrategy);
+
+app.use(passport.initialize({}));
+app.use(passport.session({}));
